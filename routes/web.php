@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FornecedorController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,18 +23,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('fornecedores');
+    Route::get('/fornecedores/cadastro', [FornecedorController::class, 'create'])->name('cadastroFornecedores');
+    Route::post('/fornecedores/store', [FornecedorController::class, 'store'])->name('cadastrarFornecedores');
+    Route::get('fornecedores/{id}', [FornecedorController::class, 'view'])->name('viewFornecedores');
+    Route::delete('fornecedores/{id}', [FornecedorController::class, 'destroy'])->name('destroyFornecedores');
 
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('cidade/{name}', [CityController::class,'getByName']);
 
-Route::controller(LoginRegisterController::class)->group(function() {
-    Route::get('/register', 'register')->name('register');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/login', 'login')->name('login');
-    Route::post('/authenticate', 'authenticate')->name('authenticate');
-    Route::get('/dashboard', 'dashboard')->name('dashboard');
-    Route::post('/logout', 'logout')->name('logout');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
-
-
-

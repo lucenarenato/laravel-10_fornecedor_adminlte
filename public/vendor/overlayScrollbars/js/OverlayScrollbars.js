@@ -58,7 +58,7 @@
             var cssCache = {};
             var cssPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];
             var jsPrefixes = ['WebKit', 'Moz', 'O', 'MS'];
-            function firstufToUpper(str) {
+            function firstLetterToUpper(str) {
                 return str.charAt(0).toUpperCase() + str.slice(1);
             }
 
@@ -71,7 +71,7 @@
                     if (cssCache[LEXICON.hOP](name))
                         return result;
 
-                    var uppercasedName = firstufToUpper(name);
+                    var uppercasedName = firstLetterToUpper(name);
                     var elmStyle = document.createElement('div')[LEXICON.s];
                     var resultPossibilities;
                     var i = 0;
@@ -84,7 +84,7 @@
                             name, //transition
                             cssPrefixes[i] + name, //-webkit-transition
                             currVendorWithoutDashes + uppercasedName, //webkitTransition
-                            firstufToUpper(currVendorWithoutDashes) + uppercasedName //WebkitTransition
+                            firstLetterToUpper(currVendorWithoutDashes) + uppercasedName //WebkitTransition
                         ];
                         for (v = 0; v < resultPossibilities[LEXICON.l]; v++) {
                             if (elmStyle[resultPossibilities[v]] !== undefined) {
@@ -132,7 +132,7 @@
                     if (!jsCache[LEXICON.hOP](name)) {
                         result = window[name];
                         for (; i < jsPrefixes[LEXICON.l]; i++)
-                            result = result || window[(isInterface ? jsPrefixes[i] : jsPrefixes[i].toLowerCase()) + firstufToUpper(name)];
+                            result = result || window[(isInterface ? jsPrefixes[i] : jsPrefixes[i].toLowerCase()) + firstLetterToUpper(name)];
                         jsCache[name] = result;
                     }
                     return result || fallback;

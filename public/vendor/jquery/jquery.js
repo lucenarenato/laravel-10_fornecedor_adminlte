@@ -2051,7 +2051,7 @@ Expr = Sizzle.selectors = {
 
 			// pseudo-class names are case-insensitive
 			// http://www.w3.org/TR/selectors/#pseudo-classes
-			// Prioritize by case sensitivity in case custom pseudos are added with uppercase ufs
+			// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
 			// Remember that setFilters inherits from pseudos
 			var args,
 				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
@@ -4209,8 +4209,8 @@ var rmsPrefix = /^-ms-/,
 	rdashAlpha = /-([a-z])/g;
 
 // Used by camelCase as callback to replace()
-function fcamelCase( _all, uf ) {
-	return uf.toUpperCase();
+function fcamelCase( _all, letter ) {
+	return letter.toUpperCase();
 }
 
 // Convert dashed to camelCase; used by the css and data modules
@@ -6688,7 +6688,7 @@ var
 	rcustomProp = /^--/,
 	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 	cssNormalTransform = {
-		ufSpacing: "0",
+		letterSpacing: "0",
 		fontWeight: "400"
 	};
 

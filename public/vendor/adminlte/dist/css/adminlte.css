@@ -6251,7 +6251,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
-  uf-spacing: normal;
+  letter-spacing: normal;
   word-break: normal;
   word-spacing: normal;
   white-space: normal;
@@ -6364,7 +6364,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
-  uf-spacing: normal;
+  letter-spacing: normal;
   word-break: normal;
   word-spacing: normal;
   white-space: normal;
@@ -40044,7 +40044,7 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
-  uf-spacing: normal;
+  letter-spacing: normal;
   word-break: normal;
   word-spacing: normal;
   white-space: normal;
