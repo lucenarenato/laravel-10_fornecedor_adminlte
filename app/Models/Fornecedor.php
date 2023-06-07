@@ -24,7 +24,6 @@ class Fornecedor extends Model
         'ativo',
         'apelido',
         'rg',
-        'ativo_fisico',
         'cep',
         'logradouro',
         'numero',

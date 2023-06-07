@@ -42,7 +42,6 @@ class FornecedorRepository extends BaseRepository
     public function store(Request $request)
     {
         try {
-
             $fornecedores = [
                 'cnpj_cpf' => $request->cnpj ? $request->cnpj : $request->cpf,
                 'razao_social' => $request->razao_social ? $request->razao_social : $request->nome,

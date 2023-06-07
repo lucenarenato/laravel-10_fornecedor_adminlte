@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use App\Models\City;
-use App\Models\ContatoAdicional;
 use App\Models\Contato;
+use App\Models\ContatoAdicional;
 use App\Models\Fornecedor;
 use App\Models\State;
+use App\Repositories\FornecedorRepository;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\FornecedorRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Validator;
 
 class FornecedorController extends Controller
 {
@@ -53,28 +54,51 @@ class FornecedorController extends Controller
 
         $result = [
             'estados' => $estados,
-            'cidades' => $rows
+            'cidades' => $rows,
         ];
 
-
         return view('fornecedor/cadastro', [
-            'dados' => $result
+            'dados' => $result,
         ]);
     }
 
     public function store(Request $request)
     {
-        $resposta = $this->repository->store($request);
+        try {
+            if ($request->tipo_cliente == 'pj') {
+                $validator = Validator::make($request->all(), [
+                    'cnpj' => ['required|cnpj|formato_cnpj'],
+                ]);
 
-        return redirect('fornecedores')->with('flash_message', $resposta['mensagem'] );
+            } else {
+                $validator = Validator::make($request->all(), [
+                    'cpf' => ['required|cpf|formato_cpf'],
+                ]);
+            }
+
+            if ($validator->fails()) {
+
+                $validator->errors();
+
+                $validator->errors()->toJson();
+            }
+
+            $resposta = $this->repository->store($request);
+
+            return redirect('fornecedores')->with('flash_message', $resposta['mensagem']);
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+
+            return response()->json(compact('error'));
+        }
     }
 
     public function view($id)
     {
         $fornecedor = DB::table('fornecedores')
-                ->where('fornecedores.id', $id)
-                ->leftJoin("contatos", "contatos.fornecedor_id", "=", "fornecedores.id")
-                ->first();
+            ->where('fornecedores.id', $id)
+            ->leftJoin("contatos", "contatos.fornecedor_id", "=", "fornecedores.id")
+            ->first();
 
         return view('fornecedor/view', ['fornecedores' => $fornecedor]);
     }
@@ -82,9 +106,9 @@ class FornecedorController extends Controller
     public function editar($id)
     {
         $fornecedor = DB::table('fornecedores')
-                ->where('fornecedores.id', $id)
-                ->leftJoin("contatos", "contatos.fornecedor_id", "=", "fornecedores.id")
-                ->first();
+            ->where('fornecedores.id', $id)
+            ->leftJoin("contatos", "contatos.fornecedor_id", "=", "fornecedores.id")
+            ->first();
 
         return view('fornecedor/editar', ['fornecedores' => $fornecedor]);
     }
@@ -114,7 +138,7 @@ class FornecedorController extends Controller
      */
     public function destroy($id)
     {
-        ContatoAdicional::where('fornecedor_id', '=',$id)->delete();
+        ContatoAdicional::where('fornecedor_id', '=', $id)->delete();
         Contato::where('fornecedor_id', '=', $id)->delete();
         Fornecedor::destroy($id);
 

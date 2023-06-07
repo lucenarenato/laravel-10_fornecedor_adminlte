@@ -34,8 +34,11 @@ $ php artisan migrate --seed
 
 Tudo certo para começar o teste! Após rodar os comandos listados acima seu ambiente estará pronto. 
 
+## Acessos
 Acesse localhost:8000 no seu navegador para visualizar a aplicação.
-Acesso ao phpmyadmin localhost:8082 | user:vercan senha:password
+- login: user:test@example.com | senha:secret
+Acesso ao phpmyadmin localhost:8082 
+- user:vercan | senha:password
 
 ## License
 

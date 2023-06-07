@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\State;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -26,8 +27,11 @@ class DatabaseSeeder extends Seeder
         } else {
             echo "Qtde: " . $count . " Records Inside Database!";
         }
-        $this->call(StateTableSeeder::class);
-        $this->call(CityTableSeeder::class);
-
+        $countCity = State::all()->count();
+        if ($countCity == 0) {
+            $this->call(StateTableSeeder::class);
+            $this->call(CityTableSeeder::class);
+        }
+        \App\Models\Fornecedor::factory(2)->create();
     }
 }
