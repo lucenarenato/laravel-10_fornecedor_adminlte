@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\City;
 use App\Models\ContatoAdicional;
 use App\Models\Contato;
@@ -10,6 +11,7 @@ use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\FornecedorRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FornecedorController extends Controller
 {
@@ -27,9 +29,8 @@ class FornecedorController extends Controller
 
     public function index()
     {
-        $fornecedor = Fornecedor::all();
-
-        return view('fornecedor/fornecedores', ['fornecedores' => $fornecedor]);
+        $fornecedor = Fornecedor::orderBy('created_at', 'asc')->paginate(5);
+        return view('fornecedor.fornecedores')->with('fornecedores', $fornecedor);
     }
 
     /**
@@ -76,6 +77,33 @@ class FornecedorController extends Controller
                 ->first();
 
         return view('fornecedor/view', ['fornecedores' => $fornecedor]);
+    }
+
+    public function editar($id)
+    {
+        $fornecedor = DB::table('fornecedores')
+                ->where('fornecedores.id', $id)
+                ->leftJoin("contatos", "contatos.fornecedor_id", "=", "fornecedores.id")
+                ->first();
+
+        return view('fornecedor/editar', ['fornecedores' => $fornecedor]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $fornecedor = Fornecedor::find($id);
+
+            if (!$fornecedor) {
+                throw new ModelNotFoundException;
+            }
+
+            $fornecedor->update($request->all());
+            return redirect()->back();
+        } catch (Exception $error) {
+            throw new Exception("Falha ao atualizar fornecedor com ID {$id}: " . $error->getMessage());
+        }
+
     }
 
     /**

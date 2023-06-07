@@ -20,7 +20,6 @@ class LaratrustSetupTables extends Migration
             $table->timestamps();
 
             $table->integer('fornecedor_id')->unsigned()->nullable();
-            //$table->foreign('fornecedor_id')->references('id')->on('fornecedores')->onDelete('cascade');
         });
 
         Schema::create('permissions', function (Blueprint $table) {

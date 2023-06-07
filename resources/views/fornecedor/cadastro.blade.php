@@ -29,16 +29,16 @@
                     <div class="row">
                         <div class="tipo_pessoa col-md-12">
                             <div class="form-check pessoa_juridica">
-                                <input class="form-check-input " type="radio" name="flexRadioDisabled"
-                                    id="flexRadioCheckedDisabled" checked>
-                                <label class="form-check-label" for="flexRadioCheckedDisabled">
+                                <input class="form-check-input " type="radio" name="tipo_cliente"
+                                    id="tipo_cliente" value="pj" checked>
+                                <label class="form-check-label" for="tipo_cliente">
                                     Pessoa Juridica
                                 </label>
                             </div>
                             <div class="form-check pessoa_fisica">
-                                <input class="form-check-input " type="radio" name="flexRadioDisabled"
-                                    id="flexRadioDisabled">
-                                <label class="form-check-label" for="flexRadioDisabled">
+                                <input class="form-check-input " type="radio" name="tipo_cliente"
+                                    id="tipo_cliente" value="pf">
+                                <label class="form-check-label" for="tipo_cliente">
                                     Pessoa Fisica
                                 </label>
                             </div>
@@ -60,7 +60,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="control-label">Indicador de Inscrição Estadual<span style="color: red;"><sup>•</sup></span></label>
-                                    <select id="ie-indicator" name="ie_indicator" class="form-control not-required-cnpj" required="">
+                                    <select id="ie-indicator" name="ie_indicator" class="form-control not-required-cnpj">
                                         <option value="">Selecione</option>
                                         <option value="contribuinte">Contribuinte</option>
                                         <option value="contribuinte_isento">Contribuinte Isento</option>
@@ -85,7 +85,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="control-label">Recolhimento<span style="color: red;"><sup>•</sup></span></label>
-                                    <select name="recolhimento" class="form-control not-required-cnpj" style="width: 100%" required="">
+                                    <select name="recolhimento" class="form-control not-required-cnpj" style="width: 100%">
                                         <option value="">Selecione</option>
                                         <option value="recolher">A Recolher pelo Prestador</option>
                                         <option value="retido">Retido pelo Tomador</option>
@@ -315,7 +315,7 @@
 @stop
 
 @section('css')
-    {{-- @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js']) --}}
+
 @stop
 
 @section('js')
@@ -323,23 +323,16 @@
 
     <script>
         $(document).ready(function() {
-            //$('.wysihtml5').wysihtml5();
             // INICIAR EM HIDDEM
             $('.formulario_fisica').hide();
             $('#cpf').removeAttr('required');
-            //Variavel com valor do campo CPF
                 var cpf=$("#cpf").val();
                 var cpf2 = cpf.replace('.', '');
                 var cpf2 = cpf2.replace('.', '');
             $('#nome').removeAttr('required');
             $('#rg').removeAttr('required');
             $('#ativo').removeAttr('required');
-            // MASCARAS
-            // $("#form_CLICliente_CLICep").mask('00000-000');
             $("#telefone").mask('(00)00000-0000');
-            // $("#cnpj").inputmask('00.000.000/0000-00');
-            // $("#cpf").inputmask('000.000.000-00');
-            // $('.btn-tool').click();
 
             $('.pessoa_juridica').click(function(e) {
                 $('.formulario_juridico').show();
@@ -491,11 +484,9 @@
             $('#cnpj').blur(function(e) {
                 console.log($(this).val());
                 $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
-                //Variavel com valor do campo cnpj
                 var cnpj=$("#cnpj").val();
                 var cnpj2 = cnpj.replace('.', '');
                 var cnpj2 = cnpj2.replace('.', '');
-                //*se tiver 1 ponto, dá um replace no ponto. se tiver 10... dá 10 replace.
                 var cnpj2 = cnpj2.replace('-', '');
                 var cnpj2 = cnpj2.replace('/', '');
                 $.ajax({
@@ -515,7 +506,7 @@
                     $("#complemento").val(results['complemento']);
                     $("#bairro").val(results['bairro']);
                     $("#uf").val(results['uf']);
-                    $("#municipio").val(results['municipio']); //.click(); //.attr('selected', true);
+                    $("#municipio").val(results['municipio']);
                 });
             });
             $('#cep').blur(function(e) {
@@ -533,7 +524,7 @@
                     $("#complemento").val(results['complemento']);
                     $("#bairro").val(results['bairro']);
                     $("#uf").val(results['uf']);
-                    $("#municipio").val(results['localidade']); //.attr('selected', true);
+                    $("#municipio").val(results['localidade']);
                 });
             });
             $('#uf').click(function(e) {
@@ -550,7 +541,6 @@
                         var content = '';
                         content += '<option value>Selecione</option>';
                         if (results) {
-                            //$('#municipio').removeAttr('disabled');
                             $.each(results, function(k, v) {
                                 content += '<option value="' + v['municipio'] + '">' + v[
                                     'municipio'] + '</option>';
@@ -570,22 +560,11 @@
             $('#cpf').blur(function(e) {
                 console.log($(this).val());
                 $('#cpf').mask('000.000.000-00', {reverse: true});
-               //Variavel com valor do campo CPF
                 var cpf=$("#cpf").val();
                 var cpf2 = cpf.replace('.', '');
                 var cpf2 = cpf2.replace('.', '');
                 console.log(cpf2);
             });
-            // Telefone
-            // $('#telefone').blur(function(e) {
-            //     console.log($(this).val());
-            //     $('#telefone').mask('(00)00000-0000', {reverse: true});
-            //    //Variavel com valor do campo CPF
-            //     var telefone=$("#telefone").val();
-            //     var telefone2 = telefone.replace('-', '');
-            //     var telefone2 = telefone2.replace('-', '');
-            //     console.log(telefone2);
-            // });
 
         });
     </script>

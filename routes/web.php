@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/fornecedores/cadastro', [FornecedorController::class, 'create'])->name('cadastroFornecedores');
     Route::post('/fornecedores/store', [FornecedorController::class, 'store'])->name('cadastrarFornecedores');
     Route::get('fornecedores/{id}', [FornecedorController::class, 'view'])->name('viewFornecedores');
+    Route::get('fornecedores/{id}/editar', [FornecedorController::class, 'editar'])->name('editarFornecedores');
+    Route::put('/fornecedores/update/{id}', [FornecedorController::class, 'update'])->name('updateFornecedores');
     Route::delete('fornecedores/{id}', [FornecedorController::class, 'destroy'])->name('destroyFornecedores');
 
     Route::get('cidade/{name}', [CityController::class,'getByName']);

@@ -15,6 +15,7 @@ class Fornecedor extends Model
         'cnpj_cpf',
         'razao_social',
         'nome_fantasia',
+        'tipo_cliente',
         'indicador_estadual',
         'inscricao_estadual',
         'inscricao_municipal',
